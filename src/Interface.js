@@ -2,6 +2,8 @@ var game = new Game();
 
 $(document).ready(function() {
 
+  $("#diceMessage").text("The dice have been rolled and their value is " + game.rollDice() + "");
+
   $.each(game.players, function( intIndex, objValue ) {
     $("#list").append($( "<h3>" + "Player " +  (intIndex + 1) + ": " + "£" + objValue.money + "</h3>" ));
   });
@@ -20,7 +22,7 @@ $(document).ready(function() {
         $("#betList").addClass("hidden");
         $("#choiceList").removeClass("hidden");
       }
-      
+
     });
 
     $("#choiceList").append($( "<h3>" + "Player " +  (intIndex) + " insert your choice" + "</h3>" + "<textarea id=" + 'choice' + intIndex + "></textarea>" + "<button id=" + 'choiceButton' + intIndex + ">Ok</button>" ));
@@ -33,7 +35,7 @@ $(document).ready(function() {
 
       if (game.allChoicesMade() === true) {
         $("#choiceList").addClass("hidden");
-        game.rollDice();
+        $("#dice").removeClass("hidden");
       }
 
     });

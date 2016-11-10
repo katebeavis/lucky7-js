@@ -7,5 +7,5 @@ Dice.prototype.getCurrentValue = function() {
 };
 
 Dice.prototype.roll = function() {
-  this.value = Math.floor((Math.random() * 12) + 1);
+  this.value = Math.floor((Math.random() * 11) + 2);
 };

@@ -17,9 +17,10 @@ describe("Dice", function() {
 
   describe('roll', function() {
 
-    it("returns a value between 1 and 12", function() {
+    it("returns a value between 2 and 12", function() {
       dice.roll();
-      expect(dice.value >= 1 && dice.value <= 12).toBeTruthy();
+      console.log(dice.value);
+      expect(dice.value > 1 && dice.value <= 12).toBeTruthy();
     });
 
   });
