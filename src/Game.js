@@ -65,6 +65,7 @@ Game.prototype.makeChoice = function(player, position) {
   if (this.choice.isValid(position)) {
     position = this.choice.convertToInt(position)
     player.choice = position
+    return true
   } else {
     throw "Invalid choice"
   }
