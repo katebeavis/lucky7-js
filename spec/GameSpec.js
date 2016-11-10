@@ -57,8 +57,8 @@ describe("Game", function() {
 
     it("places a bet if the player has enough money", function() {
       var player = game.players[0];
-      game.placeBet(player, 10);;
-      expect(game.dealer.bet).toEqual (10);
+      game.placeBet(player, 10);
+      expect(player.bet).toEqual (10);
     });
 
     it("does NOT place a bet if the player does not have enough money", function() {

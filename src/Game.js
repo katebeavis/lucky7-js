@@ -43,13 +43,15 @@ Game.prototype.gameFull = function() {
 Game.prototype.turn = function() {
   var placeBet = this.placeBet;
   this.players.forEach(function(player) {
-  placeBet(player);
+    placeBet(player);
+  // makeChoice(player);
   })
+  // rollDice();
 };
 
 Game.prototype.placeBet = function(player, bet) {
   if (player.hasEnoughMoney(bet)) {
-    this.dealer.receiveBet(bet)
+    player.makeBet(bet)
   } else {
     throw "Not enough money"
   }

@@ -9,7 +9,7 @@ describe("Player", function() {
 
   describe('start of game', function() {
 
-    it("starts with £100", function() {
+    it("has £100", function() {
       expect(player.money).toEqual (100);
     });
 
@@ -17,16 +17,41 @@ describe("Player", function() {
       expect(player.choice).toEqual (new Choice());
     });
 
+    it("has a bet of 0", function() {
+      expect(player.bet).toEqual (0);
+    });
+
+  });
+
+  describe('makeBet', function() {
+
+    it("has £100", function() {
+      player.makeBet(10);
+      expect(player.bet).toEqual (10);
+    });
+
+  });
+
+  describe('resetBet', function() {
+
+    it("has £100", function() {
+      player.resetBet();
+      expect(player.bet).toEqual (0);
+    });
 
   });
 
   describe('hasEnoughMoney', function() {
 
-    it("is able to place a bet that is greater than money available", function() {
+    it("returns true if bet that is less than money available", function() {
       expect(player.hasEnoughMoney(20)).toBeTruthy();
     });
 
-    it("is NOT able to place a bet that is greater than money available", function() {
+    it("returns true if bet that is equal to money available", function() {
+      expect(player.hasEnoughMoney(100)).toBeTruthy();
+    });
+
+    it("returns false if bet is greater than money available", function() {
       expect(player.hasEnoughMoney(110)).toBeFalsy();
     });
 

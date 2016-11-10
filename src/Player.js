@@ -1,6 +1,7 @@
 var Player = function() {
   this.money = 100;
   this.choice = new Choice();
+  this.bet = 0;
 };
 
 Player.prototype.hasEnoughMoney = function(bet) {
@@ -11,4 +12,12 @@ Player.prototype.hasEnoughMoney = function(bet) {
 
 Player.prototype.calculateCurrentTotal = function(winnings) {
   return addNumbers(this.money, winnings)
+};
+
+Player.prototype.makeBet = function(bet) {
+  this.bet = bet
+};
+
+Player.prototype.resetBet = function(first_argument) {
+  this.bet = 0
 };
