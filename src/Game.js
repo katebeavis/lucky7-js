@@ -71,6 +71,22 @@ Game.prototype.makeChoice = function(player, position) {
   }
 };
 
+Game.prototype.allBetsMade = function() {
+  var array = []
+  this.players.forEach(function(player) {
+    array.push(player.bet)
+  });
+  return !array.includes(0);
+};
+
+Game.prototype.allChoicesMade = function() {
+  var array = []
+  this.players.forEach(function(player) {
+    array.push(player.choice)
+  });
+  return !array.includes(0);
+};
+
 // player makes a bet
 // player makes a choice
 // roll dice

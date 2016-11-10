@@ -114,4 +114,46 @@ describe("Game", function() {
     
   });
 
+  describe('allBetsMade', function() {
+    beforeEach(function() {
+      game.addPlayer(2);
+    });
+
+    it("returns true if all players have placed a bet", function() {
+      var player0 = game.players[0];
+      var player1 = game.players[1];
+      game.placeBet(player0, 10);
+      game.placeBet(player1, 20);
+      expect(game.allBetsMade()).toBeTruthy();
+    });
+
+    it("returns false if all players have NOT placed a bet", function() {
+      var player0 = game.players[0];
+      game.placeBet(player0, 10);
+      expect(game.allBetsMade()).toBeFalsy();
+    });
+
+  });
+
+  describe('allChoicesMade', function() {
+    beforeEach(function() {
+      game.addPlayer(2);
+    });
+
+    it("returns true if all players have placed a bet", function() {
+      var player0 = game.players[0];
+      var player1 = game.players[1];
+      game.makeChoice(player0, "=7");
+      game.makeChoice(player1, "<7");
+      expect(game.allChoicesMade()).toBeTruthy();
+    });
+
+    it("returns false if all players have NOT placed a bet", function() {
+      var player0 = game.players[0];
+      game.makeChoice(player0, "=7");
+      expect(game.allChoicesMade()).toBeFalsy();
+    });
+
+  });
+
 });
