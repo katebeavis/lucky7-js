@@ -7,12 +7,14 @@ $(document).ready(function() {
   });
 
   $.each(game.players, function( intIndex, objValue ) {
-    $("#list").append($( "<h3>" + "Player " +  (intIndex) + " insert your bet" + "</h3>" + "<textarea id='bet'></textarea>" + "<button id='button'>Ok</button>" ));
-  });
+    $("#list").append($( "<h3>" + "Player " +  (intIndex) + " insert your bet" + "</h3>" + "<textarea id=" + 'bet' + intIndex + "></textarea>" + "<button id=" + 'button' + intIndex + ">Ok</button>" ));
 
-  $('#button').click(function() {
-    console.log($('#bet').val());
-    game.placeBet(objValue, $('#bet').val());
+    $("#" + 'button' + intIndex + "").click(function() {
+      var answer = game.placeBet(objValue, $("#" + 'bet' + intIndex + "").val());
+      if (answer === true) {$("#" + 'button' + intIndex + "").prop('disabled', true);} else { throw "error"}
+      console.log(answer);
+    });
+
   });
 
 });

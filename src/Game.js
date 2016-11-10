@@ -52,6 +52,7 @@ Game.prototype.turn = function() {
 Game.prototype.placeBet = function(player, bet) {
   if (player.hasEnoughMoney(bet)) {
     player.makeBet(bet)
+    return true
   } else {
     throw "Not enough money"
   }
