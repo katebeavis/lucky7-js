@@ -156,4 +156,13 @@ describe("Game", function() {
 
   });
 
+  describe('rollDice', function() {
+
+    it("returns a value", function() {
+      expect(game.rollDice()).toBeGreaterThan(0);
+      expect(game.rollDice()).toBeLessThan(13);
+    });
+
+  });
+
 });

@@ -48,6 +48,7 @@ Game.prototype.turn = function() {
   this.players.forEach(function(player) {
     placeBet(player);
     makeChoice(player);
+    rollDice();
   })
   // rollDice();
 };
@@ -85,6 +86,11 @@ Game.prototype.allChoicesMade = function() {
     array.push(player.choice)
   });
   return !array.includes(0);
+};
+
+Game.prototype.rollDice = function() {
+  this.dice.roll();
+  return this.dice.getCurrentValue();
 };
 
 // player makes a bet
