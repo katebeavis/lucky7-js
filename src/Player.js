@@ -1,6 +1,6 @@
 var Player = function() {
   this.money = 100;
-  this.choice = new Choice();
+  this.choice = 0
   this.bet = 0;
 };
 

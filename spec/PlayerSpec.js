@@ -14,7 +14,7 @@ describe("Player", function() {
     });
 
     it("has a choice", function() {
-      expect(player.choice).toEqual (new Choice());
+      expect(player.choice).toEqual (0);
     });
 
     it("has a bet of 0", function() {

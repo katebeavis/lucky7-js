@@ -17,8 +17,8 @@ describe("Game", function() {
       expect(game.dice).toEqual (new Dice());
     });
 
-    it("has 1 dealer", function() {
-      expect(game.dealer).toEqual (new Dealer());
+    it("has a choice object", function() {
+      expect(game.choice).toEqual (new Choice());
     });
 
   });
@@ -64,6 +64,52 @@ describe("Game", function() {
     it("does NOT place a bet if the player does not have enough money", function() {
       var player = game.players[0];
       expect(function() { game.placeBet(player, 200); } ).toThrow("Not enough money");
+    });
+    
+  });
+
+  describe('makeChoice', function() {
+    beforeEach(function() {
+      game.addPlayer(2);
+    });
+
+    describe('player chooses =7', function() {
+
+      it("player receives a choice of 7", function() {
+        var player = game.players[0];
+        game.makeChoice(player, "=7");
+        expect(player.choice).toEqual (7);
+      });
+
+    });
+
+    describe('player chooses <7', function() {
+
+      it("player receives a choice of 1", function() {
+        var player = game.players[0];
+        game.makeChoice(player, "<7");
+        expect(player.choice).toEqual (1);
+      });
+
+    });
+
+    describe('player chooses >7', function() {
+
+      it("player receives a choice of 12", function() {
+        var player = game.players[0];
+        game.makeChoice(player, ">7");
+        expect(player.choice).toEqual (12);
+      });
+
+    });
+
+    describe('player chooses a non valid input', function() {
+
+      it("an error is thrown", function() {
+        var player = game.players[0];
+        expect(function() { game.makeChoice(player, "5"); } ).toThrow("Invalid choice");
+      });
+
     });
     
   });
