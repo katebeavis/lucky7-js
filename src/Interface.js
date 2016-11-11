@@ -23,13 +23,13 @@ $(document).ready(function() {
     $("#betList").append($( "<h3>" + "Player " +  (intIndex + 1) + " insert your bet" + "</h3>" + "<textarea id=" + 'bet' + intIndex + "></textarea>" + "<button class='btn btn-primary', id=" + 'betButton' + intIndex + ">Ok</button>" ));
 
     $("#" + 'betButton' + intIndex + "").click(function() {
-      if (game.placeBet(objValue, $("#" + 'bet' + intIndex + "").val()) === true) {
+      if (game.placeBet(objValue, $("#" + 'bet' + intIndex + "").val())) {
         $("#" + 'betButton' + intIndex + "").prop('disabled', true);
       } else {
         throw "error"
       }
       
-      if (game.allBetsMade() === true) {
+      if (game.allBetsMade()) {
         $("#betList").addClass("hidden");
         $("#choiceList").removeClass("hidden");
       }
@@ -38,13 +38,13 @@ $(document).ready(function() {
 
     $("#choiceList").append($( "<h3>" + "Player " +  (intIndex + 1) + " insert your choice" + "</h3>" + "<textarea id=" + 'choice' + intIndex + "></textarea>" + "<button class='btn btn-primary', id=" + 'choiceButton' + intIndex + ">Ok</button>" ));
     $("#" + 'choiceButton' + intIndex + "").click(function() {
-      if (game.makeChoice(objValue, $("#" + 'choice' + intIndex + "").val()) === true) {
+      if (game.makeChoice(objValue, $("#" + 'choice' + intIndex + "").val())) {
         $("#" + 'choiceButton' + intIndex + "").prop('disabled', true);
       } else {
         throw "error"
       }
 
-      if (game.allChoicesMade() === true) {
+      if (game.allChoicesMade()) {
         game.resetChoices();
         $("#gameState").html( "House Rolling" );
         $("#choiceList").addClass("hidden");
@@ -53,6 +53,7 @@ $(document).ready(function() {
         var winners = game.determineWinners()
         
         var something = $.each(winners, function( intIndex, objValue ) {
+          console.log(objValue);
         });
 
         if(winners.length === 0) {
@@ -63,11 +64,14 @@ $(document).ready(function() {
 
         $("#winnerMessage").text("" + message + "");
         
-        $.each(game.players, function( intIndex, objValue ) {
-          $("#startList").html($("<h3>" + "Player " +  (intIndex + 1) + ": " + "£" + objValue.money + "</h3>"));
-;        });
-        
         $(".btn").prop('disabled', false);
+
+      var html = []
+      $.each(game.players, function( intIndex, objValue ) {
+        html.push("<h2>" + "Player " +  (intIndex + 1) + ": " + "£" + objValue.money + "</h2>");
+      });
+      $("#startList").html(html);
+
       }
 
     });

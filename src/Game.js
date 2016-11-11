@@ -1,5 +1,5 @@
 var Game = function() {
-  this.players = [];
+  this.players = [(new Player()), (new Player())];
   this._gameSetup();
 };
 
