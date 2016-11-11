@@ -45,15 +45,14 @@ $(document).ready(function() {
       }
 
       if (game.allChoicesMade()) {
-        game.resetChoices();
         $("#gameState").html( "House Rolling" );
         $("#choiceList").addClass("hidden");
         $("#dice").removeClass("hidden");
         $("#diceMessage").text("The dice have been rolled and their value is " + game.rollDice() + "");
         var winners = game.determineWinners()
+        game.resetChoices();
         
         var something = $.each(winners, function( intIndex, objValue ) {
-          console.log(objValue);
         });
 
         if(winners.length === 0) {
