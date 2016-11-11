@@ -32,15 +32,6 @@ describe("Player", function() {
 
   });
 
-  describe('resetBet', function() {
-
-    it("has £100", function() {
-      player.resetBet();
-      expect(player.bet).toEqual (0);
-    });
-
-  });
-
   describe('hasEnoughMoney', function() {
 
     it("returns true if bet that is less than money available", function() {
@@ -57,11 +48,25 @@ describe("Player", function() {
 
   });
 
-  describe('calculateCurrentTotal', function() {
+  describe('updateMoney', function() {
+
+    describe('positive winnings', function() {
+
+      it("sums up the money and the winnings", function() {
+        player.updateMoney(20);
+        expect(player.money).toEqual (120);
+      });
+
+    });
+
+  describe('negative winnings', function() {
 
     it("sums up the money and the winnings", function() {
-      expect(player.calculateCurrentTotal(20)).toEqual (120);
+      player.updateMoney(-20);
+      expect(player.money).toEqual (80);
     });
+
+  });
 
   });
 

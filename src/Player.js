@@ -10,14 +10,10 @@ Player.prototype.hasEnoughMoney = function(bet) {
   }
 };
 
-Player.prototype.calculateCurrentTotal = function(winnings) {
-  return addNumbers(this.money, winnings)
+Player.prototype.updateMoney = function(winnings) {
+  this.money = addNumbers(this.money, winnings)
 };
 
 Player.prototype.makeBet = function(bet) {
   this.bet = bet
-};
-
-Player.prototype.resetBet = function(first_argument) {
-  this.bet = 0
 };
