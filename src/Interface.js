@@ -2,11 +2,17 @@ var game = new Game();
 
 $(document).ready(function() {
 
-  $("#diceMessage").text("The dice have been rolled and their value is " + game.rollDice() + "");
-
-  $.each(game.players, function( intIndex, objValue ) {
-    $("#list").append($( "<h3>" + "Player " +  (intIndex + 1) + ": " + "£" + objValue.money + "</h3>" ));
+  $("#newPlayers").click(function() {
+    value = $("#newPlayersValue").val();
+    game.addPlayer(value);
+    $.each(game.players, function( intIndex, objValue ) {
+      $("#list").append($( "<h3>" + "Player " +  (intIndex) + ": " + "£" + objValue.money + "</h3>" ));
+    });
+    $("#newPlayersDiv").addClass("hidden");
+    $("#betList").removeClass("hidden");
   });
+
+  $("#diceMessage").text("The dice have been rolled and their value is " + game.rollDice() + "");
 
   $.each(game.players, function( intIndex, objValue ) {
     $("#betList").append($( "<h3>" + "Player " +  (intIndex) + " insert your bet" + "</h3>" + "<textarea id=" + 'bet' + intIndex + "></textarea>" + "<button id=" + 'betButton' + intIndex + ">Ok</button>" ));

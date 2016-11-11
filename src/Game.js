@@ -1,5 +1,5 @@
 var Game = function() {
-  this.players = [(new Player(this)), (new Player(this))];
+  this.players = [];
   this._gameSetup();
 };
 
@@ -7,6 +7,7 @@ Game.prototype._gameSetup = function() {
   this._createPlayers();
   this._createDice();
   this._createChoice();
+  this._createDealer();
 };
 
 Game.prototype._createPlayers = function(numberOfPlayers) {
@@ -19,11 +20,13 @@ Game.prototype._createDice = function() {
   this.dice = new Dice();
 };
 
-
 Game.prototype._createChoice = function() {
   this.choice = new Choice();
 };
 
+Game.prototype._createDealer = function() {
+  this.dealer = new Dealer();
+};
 
 Game.prototype.addPlayer = function(num) {
   if (num > 0) {
@@ -91,6 +94,15 @@ Game.prototype.allChoicesMade = function() {
 Game.prototype.rollDice = function() {
   this.dice.roll();
   return this.dice.getCurrentValue();
+};
+
+Game.prototype.determineWinner = function() {
+  var roll = this.dice.value;
+  var dealer = this.dealer;
+  this.players.forEach(function(player) {
+    something = dealer.calculateWinnings(roll, player.bet, player.choice)
+    console.log(something);
+  });
 };
 
 // player makes a bet

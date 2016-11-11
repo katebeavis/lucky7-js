@@ -25,22 +25,19 @@ describe("Dealer", function() {
   });
 
   describe('calculateWinnings', function() {
-    beforeEach(function() {
-      dealer.receiveBet(10);
-    });
 
     describe('when the player has chosen 7', function() {
 
       it("returns the bet multiplied by 6 if the dice roll is 7", function() {
-        expect(dealer.calculateWinnings(7, 7)).toEqual (60);
+        expect(dealer.calculateWinnings(7, 10, 7)).toEqual (60);
       });
 
-      it("returns 0 if the dice is less than 7", function() {
-        expect(dealer.calculateWinnings(4, 7)).toEqual (0);
+      it("returns -10 if the dice is less than 7", function() {
+        expect(dealer.calculateWinnings(4, 10, 7)).toEqual (-10);
       });
 
-      it("returns 0 if the dice is more than 7", function() {
-        expect(dealer.calculateWinnings(8, 7)).toEqual (0);
+      it("returns -10 if the dice is more than 7", function() {
+        expect(dealer.calculateWinnings(8, 10, 7)).toEqual (-10);
       });
 
     });
@@ -48,15 +45,15 @@ describe("Dealer", function() {
     describe('when the player has chosen <7', function() {
 
       it("returns double the bet if the dice roll is less than 7", function() {
-        expect(dealer.calculateWinnings(4, 1)).toEqual (20);
+        expect(dealer.calculateWinnings(4, 10, 1)).toEqual (20);
       });
 
-      it("returns 0 if the dice is more than 7", function() {
-        expect(dealer.calculateWinnings(8, 1)).toEqual (0);
+      it("returns -10 if the dice is more than 7", function() {
+        expect(dealer.calculateWinnings(8, 10, 1)).toEqual (-10);
       });
 
-      it("returns 0 if the dice is equal to 7", function() {
-        expect(dealer.calculateWinnings(7, 1)).toEqual (0);
+      it("returns -10 if the dice is equal to 7", function() {
+        expect(dealer.calculateWinnings(7, 10, 1)).toEqual (-10);
       });
 
     });
@@ -64,15 +61,15 @@ describe("Dealer", function() {
     describe('when the player has chosen >7', function() {
 
       it("returns double the bet if the dice roll is more than 7", function() {
-        expect(dealer.calculateWinnings(8, 12)).toEqual (20);
+        expect(dealer.calculateWinnings(8, 10, 12)).toEqual (20);
       });
 
-      it("returns 0 if the dice is less than 7", function() {
-        expect(dealer.calculateWinnings(4, 12)).toEqual (0);
+      it("returns -10 if the dice is less than 7", function() {
+        expect(dealer.calculateWinnings(4, 10, 12)).toEqual (-10);
       });
 
-      it("returns 0 if the dice is equal to 7", function() {
-        expect(dealer.calculateWinnings(7, 12)).toEqual (0);
+      it("returns -10 if the dice is equal to 7", function() {
+        expect(dealer.calculateWinnings(7, 10, 12)).toEqual (-10);
       });
 
     });

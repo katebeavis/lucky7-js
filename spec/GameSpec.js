@@ -165,4 +165,61 @@ describe("Game", function() {
 
   });
 
+  describe('isWinner', function() {
+
+    describe('when the player has chosen 7', function() {
+      beforeEach(function() {
+        game.addPlayer(2);
+      });
+
+      it("returns true if the dice is 7", function() {
+        var player0 = game.players[0];
+        var player1 = game.players[1];
+        player0.choice = 7;
+        player1.choice = 1;
+        player0.bet = 40;
+        player1.bet = 40;
+        var value = game.dice.value = 7
+        expect(game.determineWinner()).toBeTruthy();
+      });
+
+      // it("returns 0 if the dice is less than 7", function() {
+      //   expect(dealer.calculateWinnings(4, 7)).toEqual (0);
+      // });
+
+      // it("returns 0 if the dice is more than 7", function() {
+      //   expect(dealer.calculateWinnings(8, 7)).toEqual (0);
+      // });
+
+    });
+
+  });
+
+  // describe('determineWinners', function() {
+  //   beforeEach(function() {
+  //     game.addPlayer(2);
+  //   });
+
+  //   describe('one player wins', function() {
+
+  //     it("returns true if all players have placed a bet", function() {
+  //       var player0 = game.players[0];
+  //       var player1 = game.players[1];
+  //       player0.choice = 1;
+  //       player1.choice = 7
+  //       var value = game.dice.value = 4
+  //       expect(game.determineWinners(value)).toEqual(player0);
+  //     });
+
+  //   });
+
+  //   it("returns false if all players have NOT placed a bet", function() {
+  //     var player1 = game.players[1];
+  //     game.makeChoice(player0, ">7");
+  //     game.makeChoice(player0, "<7");
+  //     expect(game.determineWinner()).toBeFalsy();
+  //   });
+
+  // });
+
 });
