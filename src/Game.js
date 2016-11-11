@@ -91,18 +91,35 @@ Game.prototype.allChoicesMade = function() {
   return !array.includes(0);
 };
 
+Game.prototype.resetChoices = function() {
+  this.players.forEach(function(player) {
+    player.resetChoice();
+  });
+};
+
 Game.prototype.rollDice = function() {
   this.dice.roll();
   return this.dice.getCurrentValue();
 };
 
-Game.prototype.determineWinner = function() {
+Game.prototype.updatePlayerMoney = function(player, winnings) {
+  player.updateMoney(winnings);
+};
+
+Game.prototype.determineWinners = function() {
+  winners = []
   var roll = this.dice.value;
   var dealer = this.dealer;
+  var game = this;
   this.players.forEach(function(player) {
-    something = dealer.calculateWinnings(roll, player.bet, player.choice)
-    console.log(something);
+    var originalValue = player.money
+    winnings = dealer.calculateWinnings(roll, player.bet, player.choice)
+    game.updatePlayerMoney(player, winnings);
+    if (player.money > originalValue) {
+      winners.push(player);
+    }
   });
+  return winners
 };
 
 // player makes a bet

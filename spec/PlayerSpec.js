@@ -59,14 +59,32 @@ describe("Player", function() {
 
     });
 
-  describe('negative winnings', function() {
+    describe('negative winnings', function() {
 
-    it("sums up the money and the winnings", function() {
-      player.updateMoney(-20);
-      expect(player.money).toEqual (80);
+      it("sums up the money and the winnings", function() {
+        player.updateMoney(-20);
+        expect(player.money).toEqual (80);
+      });
+
     });
 
   });
+
+  describe('resetBet', function() {
+
+    it("sets bet back to 0", function() {
+      player.resetBet();
+      expect(player.bet).toEqual (0);
+    });
+
+  });
+
+  describe('resetChoice', function() {
+
+    it("reset choice back to 0", function() {
+      player.resetBet();
+      expect(player.choice).toEqual (0);
+    });
 
   });
 

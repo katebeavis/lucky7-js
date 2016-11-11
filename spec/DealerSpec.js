@@ -28,8 +28,8 @@ describe("Dealer", function() {
 
     describe('when the player has chosen 7', function() {
 
-      it("returns the bet multiplied by 6 if the dice roll is 7", function() {
-        expect(dealer.calculateWinnings(7, 10, 7)).toEqual (60);
+      it("returns the bet multiplied by 6, minus the bet, if the dice roll is 7", function() {
+        expect(dealer.calculateWinnings(7, 10, 7)).toEqual (50);
       });
 
       it("returns -10 if the dice is less than 7", function() {
@@ -44,8 +44,8 @@ describe("Dealer", function() {
 
     describe('when the player has chosen <7', function() {
 
-      it("returns double the bet if the dice roll is less than 7", function() {
-        expect(dealer.calculateWinnings(4, 10, 1)).toEqual (20);
+      it("returns double the bet, minus the bet, if the dice roll is less than 7", function() {
+        expect(dealer.calculateWinnings(4, 10, 1)).toEqual (10);
       });
 
       it("returns -10 if the dice is more than 7", function() {
@@ -60,8 +60,8 @@ describe("Dealer", function() {
 
     describe('when the player has chosen >7', function() {
 
-      it("returns double the bet if the dice roll is more than 7", function() {
-        expect(dealer.calculateWinnings(8, 10, 12)).toEqual (20);
+      it("returns double the bet, minus the bet, if the dice roll is more than 7", function() {
+        expect(dealer.calculateWinnings(8, 10, 12)).toEqual (10);
       });
 
       it("returns -10 if the dice is less than 7", function() {

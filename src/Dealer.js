@@ -12,9 +12,9 @@ Dealer.prototype.receiveBet = function(bet) {
 
 Dealer.prototype.calculateWinnings = function(roll, bet, choice) {
   if (roll === 7 && choice === 7) {
-    return (bet * 6)
+    return ((bet * 6) - bet)
   } else if (roll > 7 && choice > 7 || roll < 7 && choice < 7) {
-    return (bet * 2)
+    return ((bet * 2) - bet)
   } else {
     return bet - (bet * 2)
   }

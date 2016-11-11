@@ -11,17 +11,28 @@
     <div class="container">
       <h1>Lucky 7 Game</h1>
       <h2 class="text-danger">Game State</h2>
-      <h3>Collecting bets</h3>
+      <h3 id="turn"></h3>
+      <h3 id="gameState"></h3>
       <h2 class="text-danger">Leaderboard</h2>
     </div>
-    <div class="container">
+<!--     <div class="container">
       <div id="newPlayersDiv">
         <textarea id="newPlayersValue"></textarea>
         <button id="newPlayers", class="btn btn-primary">Add player</button>
       </div>
+    </div> -->
+    <div class="container">
+      <div id="startList">
+      </div>
     </div>
     <div class="container">
-      <div id="list">
+      <div>
+        <h3 id="updatedList"></h3>
+      </div>
+    </div>
+    <div class="container">
+      <div id="gameOver" class="hidden">
+        <h1>Game Over</h1>
       </div>
     </div>
 
@@ -39,6 +50,8 @@
       <div id="dice" class="hidden">
         <img src="public/images/dicepic.jpeg" alt="Dice">
         <h2 id="diceMessage"></h2>
+        <h2 id="winnerMessage"></h2>
+        <button id="nextButton", class="btn btn-primary">Next turn</button>
       </div>
     </div>
 
