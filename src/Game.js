@@ -1,5 +1,5 @@
 var Game = function() {
-  this.players = [(new Player()), (new Player())];
+  this.players = [];
   this._gameSetup();
 };
 
@@ -43,17 +43,6 @@ Game.prototype.gameFull = function() {
   if (this.players.length >= 10) {
     return true
   }
-};
-
-Game.prototype.turn = function() {
-  var placeBet = this.placeBet;
-  var makeChoice = this.makeChoice;
-  this.players.forEach(function(player) {
-    placeBet(player);
-    makeChoice(player);
-    rollDice();
-  })
-  // rollDice();
 };
 
 Game.prototype.placeBet = function(player, bet) {
@@ -122,11 +111,19 @@ Game.prototype.determineWinners = function() {
   return winners
 };
 
-// player makes a bet
-// player makes a choice
-// roll dice
-// calculate winnings
-// update total
+Game.prototype.determineFinalWinner = function() {
+  var hash = {}
+  this.players.forEach(function(intIndex, objValue) {
+    hash[objValue] = intIndex.money;
+  });
+  return Object.keys(hash).reduce(function(a, b){
+    return parseInt(hash[a] > hash[b] ? a : b)
+  });
+};
 
-// for (var i = 0; i < num; i ++) {
-  // }
+Game.prototype.checkIfPlayerIsOut = function(player) {
+  if (player.outOfMoney()) {
+    player.changeStatus();
+    return true
+  }
+};

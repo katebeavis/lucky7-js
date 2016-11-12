@@ -165,43 +165,43 @@ describe("Game", function() {
 
   });
 
-  // describe('determineWinners', function() {
+  describe('determineWinners', function() {
 
-  //   describe('when all players are winners', function() {
-  //     beforeEach(function() {
-  //       game.addPlayer(2);
-  //     });
+    describe('when all players are winners', function() {
+      beforeEach(function() {
+        game.addPlayer(2);
+      });
 
-  //     it("returns all players", function() {
-  //       var player0 = game.players[0];
-  //       var player1 = game.players[1];
-  //       player0.choice = 7;
-  //       player1.choice = 7;
-  //       player0.bet = 40;
-  //       player1.bet = 40;
-  //       game.dice.value = 7
-  //       expect(game.determineWinners()).toEqual ([player0, player1]);
-  //     });
+      it("returns all players", function() {
+        var player0 = game.players[0];
+        var player1 = game.players[1];
+        player0.choice = 7;
+        player1.choice = 7;
+        player0.bet = 40;
+        player1.bet = 40;
+        game.dice.value = 7
+        expect(game.determineWinners()).toEqual ([player0, player1]);
+      });
 
-  //   });
+    });
 
-  //   describe('when no players are winners', function() {
-  //     beforeEach(function() {
-  //       game.addPlayer(2);
-  //     });
+    describe('when no players are winners', function() {
+      beforeEach(function() {
+        game.addPlayer(2);
+      });
 
-  //     it("returns no players", function() {
-  //       var player0 = game.players[0];
-  //       var player1 = game.players[1];
-  //       player0.choice = 7;
-  //       player1.choice = 7;
-  //       player0.bet = 40;
-  //       player1.bet = 40;
-  //       game.dice.value = 1
-  //       expect(game.determineWinners()).toEqual ([]);
-  //     });
+      it("returns no players", function() {
+        var player0 = game.players[0];
+        var player1 = game.players[1];
+        player0.choice = 7;
+        player1.choice = 7;
+        player0.bet = 40;
+        player1.bet = 40;
+        game.dice.value = 1
+        expect(game.determineWinners()).toEqual ([]);
+      });
 
-  //   });
+    });
 
     describe('when at least one player is a winner', function() {
       beforeEach(function() {
@@ -221,7 +221,7 @@ describe("Game", function() {
 
     });
 
-  // });
+  });
 
   describe('updatePlayerMoney', function() {
 
@@ -233,6 +233,41 @@ describe("Game", function() {
       var player = game.players[0];
       game.updatePlayerMoney(player, 40)
       expect(player.money).toEqual (140);
+    });
+
+  });
+
+  describe('checkIfPlayerIsOut', function() {
+
+    beforeEach(function() {
+      game.addPlayer(1);
+    });
+
+    it("returns a player with a status of out when they have no money", function() {
+      var player = game.players[0];
+      player.money = 0
+      expect(game.checkIfPlayerIsOut(player)).toBeTruthy();
+    });
+
+    it("does NOT return a player with a status of out when they have no money", function() {
+      var player = game.players[0];
+      expect(game.checkIfPlayerIsOut(player)).toBeFalsy();
+    });
+
+  });
+
+  describe('determineFinalWinner', function() {
+
+    beforeEach(function() {
+      game.addPlayer(2);
+    });
+
+    it("returns a player with a status of out when they have no money", function() {
+      var player0 = game.players[0];
+      var player1 = game.players[1];
+      player0.money = 7;
+      player1.money = 1;
+      expect(game.determineFinalWinner()).toEqual (0);
     });
 
   });

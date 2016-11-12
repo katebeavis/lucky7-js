@@ -88,4 +88,26 @@ describe("Player", function() {
 
   });
 
+  describe('outOfMoney', function() {
+
+    it("returns false when a player has money", function() {
+      expect(player.outOfMoney()).toBeFalsy();
+    });
+
+    it("returns true when a player has no money", function() {
+      player.money = 0;
+      expect(player.outOfMoney()).toBeTruthy();
+    });
+
+  });
+
+  describe('changeStatus', function() {
+
+    it("changes a players money value to Out", function() {
+      player.changeStatus()
+      expect(player.money).toEqual ("Out")
+    });
+
+  });
+
 });

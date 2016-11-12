@@ -27,6 +27,16 @@ Player.prototype.resetChoice = function() {
   this.choice = 0;
 };
 
+Player.prototype.outOfMoney = function() {
+  if (this.money === 0) {
+    return true
+  }
+};
+
+Player.prototype.changeStatus = function() {
+  this.money = "Out"
+};
+
 function addNumbers(a, b) {
   return a + b;
 };

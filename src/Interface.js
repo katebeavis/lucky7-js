@@ -1,6 +1,6 @@
 var game = new Game();
 
-$(document).ready(function() {
+// $(document).ready(function() {
 
   // $("#newPlayers").click(function() {
   //   value = $("#newPlayersValue").val();
@@ -11,24 +11,49 @@ $(document).ready(function() {
   //   $("#newPlayersDiv").addClass("hidden");
   //   $("#betList").removeClass("hidden");
   // });
-
   var count = 1;
   $("#turn").html( "Turn " + count );
   $("#gameState").html( "Collecting Bets" );
   $.each(game.players, function( intIndex, objValue ) {
-    $("#startList").append($( "<h3>" + "Player " +  (intIndex + 1) + ": " + "£" + objValue.money + "</h3>" ));
+    var money = "£" + objValue.money
+    $("#startList").append($( "<h3>" + "Player " +  (intIndex + 1) + ": " + money + "</h3>" ));
   });
 
-  $.each(game.players, function( intIndex, objValue ) {
-    $("#betList").append($( "<h3>" + "Player " +  (intIndex + 1) + " insert your bet" + "</h3>" + "<textarea id=" + 'bet' + intIndex + "></textarea>" + "<button class='btn btn-primary', id=" + 'betButton' + intIndex + ">Ok</button>" ));
+  var some = function() {
+    var betTextBoxArray = []
+    $.each(game.players, function( intIndex, objValue ) {
+      console.log((objValue.money != 'Out'));
+      if (objValue.money != 'Out') {
+        betTextBoxArray.push( "<h3>" + "Player " +  (intIndex + 1) + " insert your bet" + "</h3>" + "<textarea id=" + 'bet' + intIndex + "></textarea>" + "<button class='btn btn-primary', id=" + 'betButton' + intIndex + ">Ok</button>" );
+      }
+    $("#betList").html(betTextBoxArray);
+    });
+  }
 
-    $("#" + 'betButton' + intIndex + "").click(function() {
+  // var some = function() {
+  //   alert("some has been called");
+  //   var betTextBoxArray = []
+  //   $.each(game.players, function( intIndex, objValue ) {
+  //     console.log((objValue.money != 'Out'));
+  //     if (objValue.money != 'Out') {
+  //       betTextBoxArray.push( "<h3>" + "Player " +  (intIndex + 1) + " insert your bet" + "</h3>" + "<textarea id=" + 'bet' + intIndex + "></textarea>" + "<button class='btn btn-primary', id=" + 'betButton' + intIndex + ">Ok</button>" );
+  //     }
+  //   $("#betList").html(betTextBoxArray);
+  //   });
+  // }
+  // some();
+  $.each(game.players, function( intIndex, objValue ) {
+    if (objValue.money != 'Out') { 
+      $("#betList").append($( "<h3>" + "Player " +  (intIndex + 1) + " insert your bet" + "</h3>" + "<textarea id=" + 'bet' + intIndex + "></textarea>" + "<button class='btn btn-primary', id=" + 'betButton' + intIndex + ">Ok</button>" ));
+    }
+    
+    $("h3").click(function(){alert("hello");});
+    $(".container").on('click', "#" + 'betButton' + intIndex + "", function () {
       if (game.placeBet(objValue, $("#" + 'bet' + intIndex + "").val())) {
         $("#" + 'betButton' + intIndex + "").prop('disabled', true);
       } else {
         throw "error"
       }
-      
       if (game.allBetsMade()) {
         $("#betList").addClass("hidden");
         $("#choiceList").removeClass("hidden");
@@ -48,17 +73,21 @@ $(document).ready(function() {
         $("#gameState").html( "House Rolling" );
         $("#choiceList").addClass("hidden");
         $("#dice").removeClass("hidden");
-        $("#diceMessage").text("The dice have been rolled and their value is " + game.rollDice() + "");
+        var diceValue = game.rollDice()
+        $("#diceMessage").text("The dice have been rolled and their value is " + diceValue + "");
         var winners = game.determineWinners()
+        $.each(game.players, function( intIndex, objValue ) {
+          game.checkIfPlayerIsOut(objValue)
+        });
         game.resetChoices();
         
-        var something = $.each(winners, function( intIndex, objValue ) {
-        });
-
+        var something = $.map(winners, function( intIndex, objValue ) {
+          return objValue + 1
+        }).join( " and " );
         if(winners.length === 0) {
           var message = "Nobody won this turn!"
         } else {
-          var message = "? are the lucky ones"
+          var message = "Player " + something + " are the lucky ones"
         }
 
         $("#winnerMessage").text("" + message + "");
@@ -67,7 +96,8 @@ $(document).ready(function() {
 
       var html = []
       $.each(game.players, function( intIndex, objValue ) {
-        html.push("<h2>" + "Player " +  (intIndex + 1) + ": " + "£" + objValue.money + "</h2>");
+        var money = "£" + objValue.money
+        html.push("<h2>" + "Player " +  (intIndex + 1) + ": " + money + "</h2>");
       });
       $("#startList").html(html);
 
@@ -79,15 +109,18 @@ $(document).ready(function() {
 
   $("#nextButton").click( function() {
     $("#dice").addClass("hidden");
-    
+
     count++;
     
-    if (count === 11) {
+    if (count === 2) {
       $("#betList").addClass("hidden");
       $("#turn").addClass("hidden");
       $("#gameOver").removeClass("hidden");
-      $("#gameState").html( "Finished" ); 
+      $("#gameState").html( "Finished" );
+      var message = game.determineFinalWinner()
+      $("#finalMessage").text( "Player " + (message + 1) + " has won!" );
     } else {
+      some()
       $("#betList").removeClass("hidden");
       $("#gameState").html( "Collecting Bets" ); 
       $("#turn").html( "Turn " + count );
@@ -95,4 +128,4 @@ $(document).ready(function() {
   
   });
 
-});
+// });
