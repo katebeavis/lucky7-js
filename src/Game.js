@@ -104,13 +104,13 @@ Game.prototype.determineWinners = function() {
   var roll = this.dice.value;
   var dealer = this.dealer;
   var game = this;
-  this.players.forEach(function(player) {
-    if (player.money !== "Out") {
-      var originalValue = player.money
-      winnings = dealer.calculateWinnings(roll, player.bet, player.choice)
-      game.updatePlayerMoney(player, winnings);
-      if (player.money > originalValue) {
-        winners.push(player);
+  this.players.forEach(function(objValue, intIndex) {
+    if (objValue.money !== "Out") {
+      var originalValue = objValue.money
+      winnings = dealer.calculateWinnings(roll, objValue.bet, objValue.choice)
+      game.updatePlayerMoney(objValue, winnings);
+      if (objValue.money > originalValue) {
+        winners.push(intIndex);
       }
     }
   });

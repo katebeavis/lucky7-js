@@ -172,7 +172,7 @@ describe("Game", function() {
         game.addPlayer(2);
       });
 
-      it("returns all players", function() {
+      it("returns the indexes of all players", function() {
         var player0 = game.players[0];
         var player1 = game.players[1];
         player0.choice = 7;
@@ -180,7 +180,7 @@ describe("Game", function() {
         player0.bet = 40;
         player1.bet = 40;
         game.dice.value = 7
-        expect(game.determineWinners()).toEqual ([player0, player1]);
+        expect(game.determineWinners()).toEqual ([0, 1]);
       });
 
     });
@@ -208,7 +208,7 @@ describe("Game", function() {
         game.addPlayer(2);
       });
 
-      it("returns no players", function() {
+      it("returns the index of the winning player", function() {
         var player0 = game.players[0];
         var player1 = game.players[1];
         player0.choice = 7;
@@ -216,7 +216,7 @@ describe("Game", function() {
         player0.bet = 40;
         player1.bet = 40;
         game.dice.value = 7
-        expect(game.determineWinners()).toEqual ([player0]);
+        expect(game.determineWinners()).toEqual ([0]);
       });
 
     });
