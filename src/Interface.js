@@ -1,28 +1,14 @@
 var game = new Game();
 
-// $(document).ready(function() {
+$(document).ready(function() {
 
-  // $("#newPlayers").click(function() {
-  //   value = $("#newPlayersValue").val();
-  //   game.addPlayer(value);
-  //   $.each(game.players, function( intIndex, objValue ) {
-  //     $("#list").append($( "<h3>" + "Player " +  (intIndex) + ": " + "£" + objValue.money + "</h3>" ));
-  //   });
-  //   $("#newPlayersDiv").addClass("hidden");
-  //   $("#betList").removeClass("hidden");
-  // });
   var count = 1;
   $("#turn").html( "Turn " + count );
   $("#gameState").html( "Collecting Bets" );
-  $.each(game.players, function( intIndex, objValue ) {
-    var money = "£" + objValue.money
-    $("#startList").append($( "<h3>" + "Player " +  (intIndex + 1) + ": " + money + "</h3>" ));
-  });
 
-  var some = function() {
+  var createBetForm = function() {
     var betTextBoxArray = []
     $.each(game.players, function( intIndex, objValue ) {
-      console.log((objValue.money != 'Out'));
       if (objValue.money != 'Out') {
         betTextBoxArray.push( "<h3>" + "Player " +  (intIndex + 1) + " insert your bet" + "</h3>" + "<textarea id=" + 'bet' + intIndex + "></textarea>" + "<button class='btn btn-primary', id=" + 'betButton' + intIndex + ">Ok</button>" );
       }
@@ -30,79 +16,80 @@ var game = new Game();
     });
   }
 
-  // var some = function() {
-  //   alert("some has been called");
-  //   var betTextBoxArray = []
-  //   $.each(game.players, function( intIndex, objValue ) {
-  //     console.log((objValue.money != 'Out'));
-  //     if (objValue.money != 'Out') {
-  //       betTextBoxArray.push( "<h3>" + "Player " +  (intIndex + 1) + " insert your bet" + "</h3>" + "<textarea id=" + 'bet' + intIndex + "></textarea>" + "<button class='btn btn-primary', id=" + 'betButton' + intIndex + ">Ok</button>" );
-  //     }
-  //   $("#betList").html(betTextBoxArray);
-  //   });
-  // }
-  // some();
-  $.each(game.players, function( intIndex, objValue ) {
-    if (objValue.money != 'Out') { 
-      $("#betList").append($( "<h3>" + "Player " +  (intIndex + 1) + " insert your bet" + "</h3>" + "<textarea id=" + 'bet' + intIndex + "></textarea>" + "<button class='btn btn-primary', id=" + 'betButton' + intIndex + ">Ok</button>" ));
-    }
-    
-    $("h3").click(function(){alert("hello");});
-    $(".container").on('click', "#" + 'betButton' + intIndex + "", function () {
-      if (game.placeBet(objValue, $("#" + 'bet' + intIndex + "").val())) {
-        $("#" + 'betButton' + intIndex + "").prop('disabled', true);
-      } else {
-        throw "error"
+  var createChoiceForm = function() {
+    var choiceTextBoxArray = []
+    $.each(game.players, function( intIndex, objValue ) {
+      if (objValue.money != 'Out') {
+        choiceTextBoxArray.push( "<h3>" + "Player " +  (intIndex + 1) + " insert your choice" + "</h3>" + "<textarea id=" + 'choice' + intIndex + "></textarea>" + "<button class='btn btn-primary', id=" + 'choiceButton' + intIndex + ">Ok</button>" );
       }
-      if (game.allBetsMade()) {
-        $("#betList").addClass("hidden");
-        $("#choiceList").removeClass("hidden");
-      }
-
+      $("#choiceList").html(choiceTextBoxArray);
     });
+  }
 
-    $("#choiceList").append($( "<h3>" + "Player " +  (intIndex + 1) + " insert your choice" + "</h3>" + "<textarea id=" + 'choice' + intIndex + "></textarea>" + "<button class='btn btn-primary', id=" + 'choiceButton' + intIndex + ">Ok</button>" ));
-    $("#" + 'choiceButton' + intIndex + "").click(function() {
-      if (game.makeChoice(objValue, $("#" + 'choice' + intIndex + "").val())) {
-        $("#" + 'choiceButton' + intIndex + "").prop('disabled', true);
-      } else {
-        throw "error"
-      }
-
-      if (game.allChoicesMade()) {
-        $("#gameState").html( "House Rolling" );
-        $("#choiceList").addClass("hidden");
-        $("#dice").removeClass("hidden");
-        var diceValue = game.rollDice()
-        $("#diceMessage").text("The dice have been rolled and their value is " + diceValue + "");
-        var winners = game.determineWinners()
-        $.each(game.players, function( intIndex, objValue ) {
-          game.checkIfPlayerIsOut(objValue)
-        });
-        game.resetChoices();
-        
-        var something = $.map(winners, function( intIndex, objValue ) {
-          return objValue + 1
-        }).join( " and " );
-        if(winners.length === 0) {
-          var message = "Nobody won this turn!"
+  $("#newPlayers").click(function() {
+    value = $("#newPlayersValue").val();
+    game.addPlayer(value);
+    $.each(game.players, function( intIndex, objValue ) {
+      var money = "£" + objValue.money
+      $("#startList").append($( "<h3>" + "Player " +  (intIndex + 1) + ": " + money + "</h3>" ));
+      
+      $(".container").on('click', "#" + 'betButton' + intIndex + "", function () {
+        if (game.placeBet(objValue, $("#" + 'bet' + intIndex + "").val())) {
+          $("#" + 'betButton' + intIndex + "").prop('disabled', true);
         } else {
-          var message = "Player " + something + " are the lucky ones"
+          throw "error"
+        }
+        if (game.allBetsMade()) {
+          $("#betList").addClass("hidden");
+          $("#choiceList").removeClass("hidden");
         }
 
-        $("#winnerMessage").text("" + message + "");
-        
-        $(".btn").prop('disabled', false);
-
-      var html = []
-      $.each(game.players, function( intIndex, objValue ) {
-        var money = "£" + objValue.money
-        html.push("<h2>" + "Player " +  (intIndex + 1) + ": " + money + "</h2>");
       });
-      $("#startList").html(html);
+      createChoiceForm();
+      $(".container").on('click', "#" + 'choiceButton' + intIndex + "", function () {
+        if (game.makeChoice(objValue, $("#" + 'choice' + intIndex + "").val())) {
+          $("#" + 'choiceButton' + intIndex + "").prop('disabled', true);
+        } else {
+          throw "error"
+        }
 
-      }
+        if (game.allChoicesMade()) {
+          $("#gameState").html( "House Rolling" );
+          $("#choiceList").addClass("hidden");
+          $("#dice").removeClass("hidden");
+          var diceValue = game.rollDice()
+          $("#diceMessage").text("The dice have been rolled and their value is " + diceValue + "");
+          var winners = game.determineWinners()
+          $.each(game.players, function( intIndex, objValue ) {
+            game.checkIfPlayerIsOut(objValue)
+          });
+          game.resetChoices();
+          
+          var winningPlayers = $.map(winners, function( intIndex, objValue ) {
+            return objValue + 1
+          }).join( " and " );
+          if(winners.length === 0) {
+            var message = "Nobody won this turn!"
+          } else {
+            var message = "Player " + winningPlayers + " are the lucky ones"
+          }
 
+          $("#winnerMessage").text("" + message + "");
+          
+          $(".btn").prop('disabled', false);
+
+        var html = []
+        $.each(game.players, function( intIndex, objValue ) {
+          var money = "£" + objValue.money
+          html.push("<h2>" + "Player " +  (intIndex + 1) + ": " + money + "</h2>");
+        });
+        $("#startList").html(html);
+
+        }
+
+      });
+      createBetForm();
+      $("#newPlayersDiv").addClass("hidden");
     });
 
   });
@@ -112,7 +99,7 @@ var game = new Game();
 
     count++;
     
-    if (count === 2) {
+    if (count === 11) {
       $("#betList").addClass("hidden");
       $("#turn").addClass("hidden");
       $("#gameOver").removeClass("hidden");
@@ -120,7 +107,8 @@ var game = new Game();
       var message = game.determineFinalWinner()
       $("#finalMessage").text( "Player " + (message + 1) + " has won!" );
     } else {
-      some()
+      createBetForm();
+      createChoiceForm();
       $("#betList").removeClass("hidden");
       $("#gameState").html( "Collecting Bets" ); 
       $("#turn").html( "Turn " + count );
@@ -128,4 +116,4 @@ var game = new Game();
   
   });
 
-// });
+});

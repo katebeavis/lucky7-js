@@ -67,7 +67,9 @@ Game.prototype.makeChoice = function(player, position) {
 Game.prototype.allBetsMade = function() {
   var array = []
   this.players.forEach(function(player) {
-    array.push(player.bet)
+    if (player.money !== "Out") {
+      array.push(player.bet)
+    }
   });
   return !array.includes(0);
 };
@@ -75,7 +77,9 @@ Game.prototype.allBetsMade = function() {
 Game.prototype.allChoicesMade = function() {
   var array = []
   this.players.forEach(function(player) {
-    array.push(player.choice)
+    if (player.money !== "Out") {
+      array.push(player.choice)
+    }
   });
   return !array.includes(0);
 };
@@ -101,11 +105,13 @@ Game.prototype.determineWinners = function() {
   var dealer = this.dealer;
   var game = this;
   this.players.forEach(function(player) {
-    var originalValue = player.money
-    winnings = dealer.calculateWinnings(roll, player.bet, player.choice)
-    game.updatePlayerMoney(player, winnings);
-    if (player.money > originalValue) {
-      winners.push(player);
+    if (player.money !== "Out") {
+      var originalValue = player.money
+      winnings = dealer.calculateWinnings(roll, player.bet, player.choice)
+      game.updatePlayerMoney(player, winnings);
+      if (player.money > originalValue) {
+        winners.push(player);
+      }
     }
   });
   return winners
