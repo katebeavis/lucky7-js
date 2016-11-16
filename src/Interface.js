@@ -50,7 +50,11 @@ $(document).ready(function() {
     var html = []
     html.push("<h2 class='text-danger'>Leaderboard</h2>")
     $.each(game.players, function(intIndex, objValue) {
-      var money = "£" + objValue.money
+      if (objValue.money != "Out") {
+        var money = "£" + objValue.money
+      } else {
+        var money = objValue.money
+      }
       html.push("<h3> Player " +  (intIndex + 1) + ": " + money + "</h3>");
     });
     $("#startList").html(html);
@@ -100,9 +104,21 @@ $(document).ready(function() {
   }
 
   var checkIfPlayerIsOut = function() {
+    losers = []
     $.each(game.players, function(intIndex, objValue) {
-      game.checkIfPlayerIsOut(objValue)
+      if (game.checkIfPlayerIsOut(objValue)) {
+        losers.push(intIndex)
+      }
     });
+    var losingPlayers = $.map(losers, function(value) {
+      return value + 1
+    }).join( " and " );
+    if(losers.length > 0) {
+      var message = "Player " + losingPlayers + " are out!"
+      $("#losersMessage").text("" + message + "");
+    } else {
+      $("#losersMessage").text("");
+    }
   }
 
   var displayWinners = function() {
@@ -116,6 +132,10 @@ $(document).ready(function() {
       var message = "Player " + winningPlayers + " are the lucky ones"
     }
     $("#winnerMessage").text("" + message + "");
+  }
+
+  var displayLosers = function() {
+
   }
 
   $("#nextButton").click( function() {
