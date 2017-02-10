@@ -29,19 +29,15 @@ Game.prototype._createDealer = function() {
 };
 
 Game.prototype.addPlayer = function(num) {
+  num = parseInt(num);
   if (num > 0) {
-    if (!this.gameFull()) {
-      this._createPlayers(1);
-      this.addPlayer(num - 1);
+    if (num <= 10) {
+      this._createPlayers(num);
     } else {
       throw "Max players exceeded"
     }
-  }
-};
-
-Game.prototype.gameFull = function() {
-  if (this.players.length >= 10) {
-    return true
+  } else {
+    throw "At least one player required"
   }
 };
 

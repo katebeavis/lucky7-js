@@ -30,22 +30,12 @@ describe("Game", function() {
       expect(game.players).toEqual ([new Player()]);
     });
 
+    it("requires at least one player", function() {
+      expect(function() { game.addPlayer(0); } ).toThrow("At least one player required");
+    });
+
     it("only accepts a max of 10 players", function() {
       expect(function() { game.addPlayer(11); } ).toThrow("Max players exceeded");
-    });
-
-  });
-
-  describe('gameFull', function() {
-
-    it("returns true if max number of players have been added", function() {
-      game.addPlayer(10);
-      expect(game.gameFull()).toBeTruthy();
-    });
-
-    it("returns false if max number of players have NOT been added", function() {
-      game.addPlayer(9);
-      expect(game.gameFull()).toBeFalsy();
     });
 
   });
